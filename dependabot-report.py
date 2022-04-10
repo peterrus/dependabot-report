@@ -95,7 +95,7 @@ if __name__ == '__main__':
     for repo in get_repos(args.organization_name):
         if args.show_all:
             print(format_repo(repo, full=True))
-            if args.show_details:
+            if args.show_details and repo.alerts_open > 0:
                 print('## Details for open alerts\n')
                 for alert in get_alerts(args.organization_name, repo.name, states='OPEN'):
                     print(format_alert(alert) + '\n')
