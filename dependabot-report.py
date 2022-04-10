@@ -84,7 +84,7 @@ if __name__ == '__main__':
     arg_parser.add_argument(
         '-d', dest='show_details', help='Show details for open alerts', action='store_true')
     arg_parser.add_argument(
-        '-a', dest='show_all', help='Show all reposities in the organisation with a count of all their alerts', action='store_true')
+        '-a', dest='show_all', help='Show all repositories in the organization with a count of all their alerts', action='store_true')
     arg_parser.add_argument(
         '-v', dest='debug', help='Show debug output', action='store_true')
     args = arg_parser.parse_args()
