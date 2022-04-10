@@ -3,7 +3,7 @@ from string import Template
 
 def get_repo_query(page: int, pagesize: int, org_name: str):
     index = pagesize * page
-    t = Template("""
+    t = Template('''
     {
       organization(login: "$org_name") {
         repositories(orderBy: {direction: DESC, field: PUSHED_AT}, first: $index) {
@@ -16,7 +16,13 @@ def get_repo_query(page: int, pagesize: int, org_name: str):
               id
               name
               pushedAt
-              vulnerabilityAlerts(states: OPEN) {
+              alertsOpen: vulnerabilityAlerts(states: OPEN) {
+                totalCount
+              }
+              alertsFixed: vulnerabilityAlerts(states: FIXED) {
+                totalCount
+              }
+              alertsDismissed: vulnerabilityAlerts(states: DISMISSED) {
                 totalCount
               }
             }
@@ -24,13 +30,13 @@ def get_repo_query(page: int, pagesize: int, org_name: str):
         }
       }
     }
-    """)
+    ''')
     return t.substitute(index=index, org_name=org_name)
 
 
 def get_alert_query(page: int, pagesize: int, org_name: str, repository_name: str, states: str):
     index = pagesize * page
-    t = Template("""
+    t = Template('''
     {
       organization(login: "$org_name") {
         repository(name: "$repository_name") {
@@ -45,9 +51,16 @@ def get_alert_query(page: int, pagesize: int, org_name: str, repository_name: st
               securityVulnerability {
                 package {
                   name
+                  ecosystem
                 }
                 advisory {
-                  description
+                  permalink
+                  severity
+                  summary
+                  identifiers {
+                    type
+                    value
+                  }
                 }
               }
             }
@@ -55,6 +68,5 @@ def get_alert_query(page: int, pagesize: int, org_name: str, repository_name: st
         }
       }
     }
-    """)
+    ''')
     return t.substitute(index=index, org_name=org_name, repository_name=repository_name, states=states)
-
