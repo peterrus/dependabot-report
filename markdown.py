@@ -24,7 +24,7 @@ def format_repo(repo: Repository, full=False):
         t = Template(dedent('''\
         # $name
 
-        - **Open:**\t\t\t$alerts_open
+        - **Open:**\t\t$alerts_open
         - **Fixed:**\t\t$alerts_fixed
         - **Dismissed:**\t$alerts_dismissed
         '''))
@@ -32,6 +32,6 @@ def format_repo(repo: Repository, full=False):
     else:
         t = Template(dedent('''\
         # $name
-        - **Open:**\t\t\t$alerts_open
+        - **Open:**\t\t$alerts_open
         '''))
         return t.substitute(repo.__dict__)
