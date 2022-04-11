@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from typing import List
 
 
 @dataclass
@@ -8,7 +9,7 @@ class Alert:
     permalink: str
     severity: str
     summary: str
-    identifiers: list[dict] = field(default_factory=list)
+    identifiers: List[dict]
 
 
 @dataclass
